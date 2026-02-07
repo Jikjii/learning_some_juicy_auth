@@ -8,6 +8,9 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import { LoadingSwap } from "@/components/ui/loading-swap";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const signUpSchema = z.object({
     name: z.string().min(1),
@@ -18,6 +21,7 @@ const signUpSchema = z.object({
 type SignUpForm = z.infer<typeof signUpSchema>
 
 export function SignUpTab() {
+    const router = useRouter();
     const form = useForm<SignUpForm>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
@@ -32,7 +36,16 @@ export function SignUpTab() {
 
 
     async function handleSignUp(data: SignUpForm) {
-        await new Promise(resolve => setTimeout(resolve, 2000))
+
+        await authClient.signUp.email({ ...data, callbackURL: "/" }, {
+            onError: (error) => {
+                toast.error(error.error.message || "Failed to sign up")
+            },
+            onSuccess: () => {
+                router.push("/")
+            }
+        })
+
     }
 
     return <Form {...form}>
