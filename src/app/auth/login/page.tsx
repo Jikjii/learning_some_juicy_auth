@@ -9,8 +9,9 @@ export default function LoginPage (){
             <TabsTrigger value="signin">Sign In</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
         </TabsList>
-        <Card>
+       
             <TabsContent value="signin">
+                <Card>
                 <CardHeader className="text-2xl font-bold">
                     <CardTitle>
                      Sign In   
@@ -19,9 +20,11 @@ export default function LoginPage (){
                     <CardContent>
                     <SignInTab />
                     </CardContent> 
+                    </Card>
             </TabsContent>
 
             <TabsContent value="signup">
+                <Card>
                 <CardHeader className="text-2xl font-bold">
                     <CardTitle>
                      Sign Up
@@ -30,9 +33,10 @@ export default function LoginPage (){
                     <CardContent>
                     <SignUpTab />
                     </CardContent> 
+                </Card>
             </TabsContent>
 
             
-        </Card>
+        
     </Tabs>
 }
