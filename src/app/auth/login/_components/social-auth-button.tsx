@@ -1,5 +1,6 @@
 "use client"
 
+import { BetterAuthActionButton } from "@/components/auth/better-auth-action-button"
 import { Button } from "@/components/ui/button"
 import { authClient } from "@/lib/auth-client"
 import { SUPPORTED_OAUTH_PROVIDER_DETAILS, SUPPORTED_OAUTH_PROVIDERS } from "@/lib/o-auth-providers"
@@ -11,11 +12,12 @@ export function SocialAuthButtons() {
 
         // add some loading and error states 
 
-        return <Button variant="outline" key={provider} onClick={() => {
-            authClient.signIn.social({ provider, callbackURL: "/"})
+        return <BetterAuthActionButton variant="outline" key={provider} action={() => {
+           return authClient.signIn.social({ provider, callbackURL: "/"})
+           
         }}>
             <Icon />
             {SUPPORTED_OAUTH_PROVIDER_DETAILS[provider].name}
-        </Button>
+        </BetterAuthActionButton>
     })
 }
