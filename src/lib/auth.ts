@@ -3,6 +3,8 @@ import {drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/drizzle/db";
 import { nextCookies } from "better-auth/next-js";
 import { sendVerificationEmail } from "better-auth/api";
+import { sendPasswordResetEmail } from "./emails/sendPasswordResetEmail";
+import { sendEmailVerificationEmail } from "./emails/email-verification";
 
 export const auth = betterAuth({
     emailAndPassword: {
@@ -10,13 +12,13 @@ export const auth = betterAuth({
         requireEmailVerification: true,
         sendResetPassword: async ({user, url}) => {
             await sendPasswordResetEmail({ user, url });
-        }
+        },
     },
     emailVerification: {
         autoSignInAfterVerification: true,
         sendOnSignIn: true,
         sendVerificationEmail: async ({ user, url }) => {
-            await sendVerificationEmail({ user, url })
+            await sendEmailVerificationEmail({ user, url })
         },
     },
     socialProviders: {
